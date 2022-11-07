@@ -12,4 +12,9 @@ public class TaskCategoryServiceImplementation implements TaskCategoryService {
     public List<TaskCategory> getCategories() {
         return taskCategoryRepository.findAll();
     }
+
+    @Override
+    public TaskCategory getCategoryById(Long categoryId) {
+        return taskCategoryRepository.findById(categoryId).get();
+    }
 }

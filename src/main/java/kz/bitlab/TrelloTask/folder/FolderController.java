@@ -7,9 +7,7 @@ import kz.bitlab.TrelloTask.task_category.TaskCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,15 +31,24 @@ public class FolderController {
         return "index";
     }
 
-    @GetMapping(value = "/{folderId}")
-    public String getFolder(@PathVariable(name = "folderId") Long Id,
+    @GetMapping("/{folderId}")
+    public String getFolderDetails(@PathVariable(name = "folderId") Long Id,
                             Model model) {
-        Folder folder = folderService.getFolder(Id);
-        List<TaskCategory> categories = taskCategoryService.getCategories();
-        List<Task> tasks = taskService.getTasksByFolderId(folder);
-        model.addAttribute("folder", folder);
-        model.addAttribute("categories", categories);
-        model.addAttribute("tasks", tasks);
+        model = folderService.getFolderDetails(Id, model);
         return "folder_details";
+    }
+
+    @PostMapping("/assign_category")
+    public String assignCategory(@RequestParam("folder_id") Long folderId,
+                                 @RequestParam("category_id") Long categoryId) {
+        folderService.assignCategory(folderId, categoryId);
+        return "redirect:/folders/" + folderId;
+    }
+
+    @PostMapping("/delete_category")
+    public String deleteCategory(@RequestParam("folder_id") Long folderId,
+                                 @RequestParam("category_id") Long categoryId) {
+        folderService.deleteCategory(folderId, categoryId);
+        return "redirect:/folders/" + folderId;
     }
 }

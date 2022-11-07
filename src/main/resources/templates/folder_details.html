@@ -18,19 +18,19 @@
             <p class="card-text" th:text="${folder.getDescription()}"></p>
           </div>
           <div class="card-footer">
-            <div th:each="category : ${folder.getCategories()}" class="flex-wrap">
+            <div th:each="category : ${folder.getCategories()}">
               <form th:action="@{'/folders/delete_category'}" method="post" class="mb-2">
-                <input type="hidden" name="folderId" th:value="${folder.getId()}">
-                <input type="hidden" name="categoryId" th:value="${category.getId()}">
-                <button class="btn btn-primary-sm" th:text="'- ' + ${category.getName()}"></button>
+                <input type="hidden" name="folder_id" th:value="${folder.getId()}">
+                <input type="hidden" name="category_id" th:value="${category.getId()}">
+                <button class="btn btn-primary btn-sm" th:text="'- ' + ${category.getName()}"></button>
               </form>
             </div>
             <hr>
             <div th:each="category : ${categories}">
-              <form th:action="@{'/folders/delete_category'}" method="post" class="mb-2">
-                <input type="hidden" name="folderId" th:value="${folder.getId()}">
-                <input type="hidden" name="categoryId" th:value="${category.getId()}">
-                <button class="btn btn-primary-sm" th:text="'+ ' + ${category.getName()}"></button>
+              <form th:action="@{'/folders/assign_category'}" method="post" class="mb-2">
+                <input type="hidden" name="folder_id" th:value="${folder.getId()}">
+                <input type="hidden" name="category_id" th:value="${category.getId()}">
+                <button class="btn btn-success btn-sm" th:text="'+ ' + ${category.getName()}"></button>
               </form>
             </div>
           </div>
