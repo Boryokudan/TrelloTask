@@ -11,10 +11,12 @@ public class FolderServiceImplementation implements FolderService {
     @Autowired
     private FolderRepository folderRepository;
 
+    @Override
     public List<Folder> getFolders() {
         return folderRepository.findAll();
     }
 
+    @Override
     public Folder getFolder(Long Id) {
         return folderRepository.findById(Id).orElseThrow();
     }

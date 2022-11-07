@@ -8,8 +8,8 @@
   <script type="text/javascript" th:src="@{'/js/bootstrap.bundle.js'}" defer></script>
 </head>
 <body>
-  <div class="col-12" th:insert="~{elements/navbar.html}"></div>
-  <div class="container">
+    <div class="col-12" th:insert="~{navbar.html}"></div>
+    <div class="container">
     <div class="row">
       <div class="col-10 mx-auto">
         <div class="card">
@@ -18,25 +18,46 @@
             <p class="card-text" th:text="${folder.getDescription()}"></p>
           </div>
           <div class="card-footer">
-            <div th:each="category : ${folder.getCategories()}">
-              <form th:action="@{'/folders/delete_category'}" method="post">
+            <div th:each="category : ${folder.getCategories()}" class="flex-wrap">
+              <form th:action="@{'/folders/delete_category'}" method="post" class="mb-2">
                 <input type="hidden" name="folderId" th:value="${folder.getId()}">
                 <input type="hidden" name="categoryId" th:value="${category.getId()}">
-                <button class="btn btn-primary" th:text="'- ' + ${category.getName()}"></button>
+                <button class="btn btn-primary-sm" th:text="'- ' + ${category.getName()}"></button>
               </form>
             </div>
             <hr>
             <div th:each="category : ${categories}">
-              <form th:action="@{'/folders/delete_category'}" method="post">
+              <form th:action="@{'/folders/delete_category'}" method="post" class="mb-2">
                 <input type="hidden" name="folderId" th:value="${folder.getId()}">
                 <input type="hidden" name="categoryId" th:value="${category.getId()}">
-                <button class="btn btn-primary" th:text="'- ' + ${category.getName()}"></button>
+                <button class="btn btn-primary-sm" th:text="'+ ' + ${category.getName()}"></button>
               </form>
             </div>
           </div>
         </div>
-
       </div>
+    </div>
+    <div class="row">
+        <div class="col-10 mx-auto">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="task : ${tasks}">
+                        <td th:text="${task.getId()}"></td>
+                        <td th:text="${task.getTitle()}"></td>
+                        <td th:text="${task.getStatus()}"></td>
+                        <td><a th:href="@{'/tasks/' + ${task.getId()}}">View</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
   </div>
 </body>

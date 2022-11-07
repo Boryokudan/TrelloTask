@@ -1,5 +1,7 @@
 package kz.bitlab.TrelloTask.task_category;
 
-public interface TaskCategoryService {
+import java.util.List;
 
+public interface TaskCategoryService {
+    List<TaskCategory> getCategories();
 }

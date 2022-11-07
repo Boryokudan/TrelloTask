@@ -1,7 +1,9 @@
 package kz.bitlab.TrelloTask.folder;
 
+import kz.bitlab.TrelloTask.task.Task;
+import kz.bitlab.TrelloTask.task.TaskService;
 import kz.bitlab.TrelloTask.task_category.TaskCategory;
-import kz.bitlab.TrelloTask.task_category.TaskCategoryServiceImplementation;
+import kz.bitlab.TrelloTask.task_category.TaskCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,15 +18,17 @@ import java.util.List;
 public class FolderController {
 
     @Autowired
-    private FolderServiceImplementation folderService;
+    private FolderService folderService;
 
     @Autowired
-    private TaskCategoryServiceImplementation taskCategoryService;
+    private TaskCategoryService taskCategoryService;
+
+    @Autowired
+    private TaskService taskService;
 
     @GetMapping
     public String getFolders(Model model) {
         List<Folder> folders = folderService.getFolders();
-        System.out.println(folders.get(0).getDescription());
         model.addAttribute("folders", folders);
         return "index";
     }
@@ -33,9 +37,11 @@ public class FolderController {
     public String getFolder(@PathVariable(name = "folderId") Long Id,
                             Model model) {
         Folder folder = folderService.getFolder(Id);
-        List<TaskCategory> categoryList = taskCategoryService.getCategories();
-        model.addAttribute(folder);
-        model.addAttribute(categoryList);
+        List<TaskCategory> categories = taskCategoryService.getCategories();
+        List<Task> tasks = taskService.getTasksByFolderId(folder);
+        model.addAttribute("folder", folder);
+        model.addAttribute("categories", categories);
+        model.addAttribute("tasks", tasks);
         return "folder_details";
     }
 }
