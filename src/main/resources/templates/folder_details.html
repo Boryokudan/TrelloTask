@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Folder Details</title>
   <link type="text/css" rel="stylesheet" th:href="@{'/css/bootstrap.css'}">
   <script type="text/javascript" th:src="@{'/js/bootstrap.js'}" defer></script>
   <script type="text/javascript" th:src="@{'/js/bootstrap.bundle.js'}" defer></script>
@@ -22,7 +22,7 @@
               <form th:action="@{'/folders/delete_category'}" method="post" class="mb-2">
                 <input type="hidden" name="folder_id" th:value="${folder.getId()}">
                 <input type="hidden" name="category_id" th:value="${category.getId()}">
-                <button class="btn btn-primary btn-sm" th:text="'- ' + ${category.getName()}"></button>
+                <button class="btn btn-primary btn-sm" th:text="'x ' + ${category.getName()}"></button>
               </form>
             </div>
             <hr>
@@ -52,7 +52,12 @@
                     <tr th:each="task : ${tasks}">
                         <td th:text="${task.getId()}"></td>
                         <td th:text="${task.getTitle()}"></td>
-                        <td th:text="${task.getStatus()}"></td>
+                        <td th:switch="${task.getStatus()}">
+                            <span th:case="0" th:text="'TO DO'" style="color: blue;"></span>
+                            <span th:case="1" th:text="'IN PROGRESS'" style="color: purple;"></span>
+                            <span th:case="2" th:text="'DONE'" style="color: green;"></span>
+                            <span th:case="3" th:text="'FAILED'" style="color: red;"></span>
+                        </td>
                         <td><a th:href="@{'/tasks/' + ${task.getId()}}">View</a></td>
                     </tr>
                 </tbody>

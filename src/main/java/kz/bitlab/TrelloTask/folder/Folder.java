@@ -1,6 +1,5 @@
 package kz.bitlab.TrelloTask.folder;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +23,7 @@ public class Folder {
 
     private String description;
 
-    @ManyToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<TaskCategory> categories;
 
     public Long getId() {
